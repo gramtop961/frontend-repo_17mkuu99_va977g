@@ -1,9 +1,9 @@
 import React, { useMemo, useState } from 'react';
+import Hero from './components/Hero';
 import StoryBar from './components/StoryBar';
 import StoryViewer from './components/StoryViewer';
 import ProfilesList from './components/ProfilesList';
 import VisitHistory from './components/VisitHistory';
-import { User } from 'lucide-react';
 
 const sampleProfiles = [
   {
@@ -101,37 +101,31 @@ export default function App() {
   const clearVisits = () => setVisits([]);
 
   return (
-    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100">
-      {/* Header */}
-      <header className="sticky top-0 z-20 bg-white/80 dark:bg-neutral-950/80 backdrop-blur border-b border-neutral-200 dark:border-neutral-800">
-        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center gap-3">
-          <div className="h-9 w-9 rounded-lg bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 grid place-items-center">
-            <User size={18} />
-          </div>
-          <div>
-            <div className="font-semibold leading-tight">Insta-style Stories</div>
-            <div className="text-xs text-neutral-500">with profile visit history</div>
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen bg-neutral-950 text-neutral-100">
+      <Hero />
 
-      <main className="max-w-6xl mx-auto px-4 py-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 space-y-6">
-          {/* Stories */}
-          <div className="rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900">
-            <StoryBar stories={stories} onOpen={openStory} />
+      <main className="relative -mt-8 md:-mt-10 z-10">
+        <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 space-y-6">
+            {/* Stories */}
+            <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_0_0_1px_rgba(255,255,255,0.06)]">
+              <div className="px-4 pt-4 text-sm text-white/70">Stories</div>
+              <StoryBar stories={stories} onOpen={openStory} />
+            </div>
+
+            {/* Profiles */}
+            <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-4 shadow-[0_0_0_1px_rgba(255,255,255,0.06)]">
+              <div className="mb-3 font-medium text-white">Suggested profiles</div>
+              <ProfilesList profiles={sampleProfiles} onVisit={visitProfile} />
+            </div>
           </div>
 
-          {/* Profiles */}
-          <div className="rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-4">
-            <div className="mb-3 font-medium">Suggested profiles</div>
-            <ProfilesList profiles={sampleProfiles} onVisit={visitProfile} />
+          {/* History */}
+          <div className="lg:col-span-1">
+            <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-2 shadow-[0_0_0_1px_rgba(255,255,255,0.06)]">
+              <VisitHistory visits={visits} onClear={clearVisits} />
+            </div>
           </div>
-        </div>
-
-        {/* History */}
-        <div className="lg:col-span-1">
-          <VisitHistory visits={visits} onClear={clearVisits} />
         </div>
       </main>
 
